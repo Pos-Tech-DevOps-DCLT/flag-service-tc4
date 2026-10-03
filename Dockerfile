@@ -14,7 +14,8 @@ WORKDIR /app
 RUN addgroup --system appgroup && adduser --system --ingroup appgroup --home /home/appuser appuser
 
 COPY --from=builder --chown=appuser:appgroup /root/.local /home/appuser/.local
-COPY --chown=appuser:appgroup app.py .
+# telemetry.py + gunicorn.conf.py: instrumentacao OpenTelemetry (Fase 4)
+COPY --chown=appuser:appgroup app.py telemetry.py gunicorn.conf.py ./
 
 ENV HOME=/home/appuser
 ENV PATH=/home/appuser/.local/bin:$PATH
